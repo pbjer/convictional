@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  title: Convictional Interview API Contract
+  description: This is the required output for the Convictional Eng Challenge
+  contact:
+    email: samuel@convictional.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Convictional
+  url: https://convictional.com
+tags:
+  - name: product
+    description: Representation of a seller's products
+  - name: store
+    description: Representation of a seller's storefront
+
+# API Paths
+paths:
+  /products:
+    get:
+      tags:
+        - product
+      summary: Find product by ID
+      description: Returns a list of products
+      operationId: getAllProducts
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/product'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /products/{productId}:
+    get:
+      tags:
+        - product
+      summary: Find product by ID
+      description: Returns a single product
+      operationId: getProductById
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /store/inventory:
+    get:
+      tags:
+        - store
+      summary: Returns product inventories
+      description: Returns an array of inventory objects for each variant
+      operationId: getInventory
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inventory'
+
+  # API Objects
+components:
+  schemas:
+    inventory:
+      properties:
+        productId:
+          type: string
+        variantId:
+          type: string
+        stock:
+          type: integer
+          format: int64
+    product:
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+          description: Product title
+        vendor:
+          type: string
+          description: Product vendor
+        bodyHtml:
+          type: string
+          description: HTML description of a product
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/variant'
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/image'
+    variant:
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        sku:
+          type: string
+        available:
+          type: boolean
+          description: True if inventory > 0, false otherwise
+        inventory_quantity:
+          type: integer
+          format: int64
+        weight:
+          $ref: '#/components/schemas/weight'
+    weight:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+        unit:
+          type: string
+    image:
+      required:
+        - source
+        - variantId
+      type: object
+      properties:
+        source:
+          type: string
+        variantId:
+          type: string
+          description: ID for the variant the image relates to
+    error:
+      required:
+        - message
+      type: object
+      properties:
+        message:
+          type: string

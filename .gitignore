@@ -1,6 +1,5 @@
 *.env
 node_modules/
-*.yaml
 scratch.*
 .DS_store
 coverage/
