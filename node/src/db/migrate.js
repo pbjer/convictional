@@ -8,7 +8,7 @@ async function migrate(dir) {
   const route = path.resolve(process.cwd(), dir);
   const dirents = await readdir(route, { withFileTypes: true });
   for (const dirent of dirents) {
-    console.log(`\nRunning migration - ${dirent.name}`);
+    console.log(`\nRunning migration - ${dirent.name}\n`);
     await runSqlFromFile(route + '/' + dirent.name);
   }
 }

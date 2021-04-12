@@ -1,50 +1,6 @@
 const axios = require('axios');
 const { query } = require('../db');
 
-function mappingExample(product) {
-  let mappedProduct = {
-    id: product.id,
-    title: product.title,
-    vendor: product.vendor,
-    bodyHtml: product.body_html,
-  };
-
-  let mappedVariants = [];
-  let mappedImages = [];
-
-  product.variants.forEach((v) => {
-    mappedVariants.push({
-      id: v.id,
-      productId: v.product_id,
-      title: v.title,
-      sku: v.sku,
-      inventoryQuantity: 0,
-      weightValue: v.weight,
-      weightUnit: v.weight_unit,
-    });
-
-    v.images.forEach((i) => {
-      mappedImages.push({
-        variantId: v.id,
-        source: i.src,
-      });
-    });
-  });
-
-  return {
-    product: mappedProduct,
-    variants: mappedVariants,
-    images: mappedImages,
-  };
-}
-
-const SOURCE_CONFIGS = [
-  {
-    url: 'https://my-json-server.typicode.com/convictional/engineering-interview/products',
-    mappingFunction: mappingExample,
-  },
-];
-
 async function handleSeedProcess(configs) {
   try {
     // Support concurrent API requests to GET product data.

@@ -1,5 +1,7 @@
 *.env
-node_modules
+node_modules/
 *.yaml
 scratch.*
 .DS_store
+*.test.js
+coverage/
