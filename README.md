@@ -16,4 +16,6 @@ This will build and run two containers, one for NodeJS and one for Postgres.
     - GET /products/:productId
     - GET /store/inventory
 
-Note: The Node container will log an error during step 3, because I made the decision to add a unique constraint on the images table to prevent what would be considered duplicate data in a production environment. This is intended behavior.
+Notes: 
+- The Node container will log an error during step 3, because I made the decision to add a unique constraint on the images table to prevent what would be considered duplicate data in a production environment. This is intended behavior.
+- When first running docker compose, it is possible that the database initialization process will outlined in `/postgres/init/` will block connections. If this happens, stopping the containers and running `docker compose up` again should have a succesful result as the initialization process will be skipped in subsequent startups.
