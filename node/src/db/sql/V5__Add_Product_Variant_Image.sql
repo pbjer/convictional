@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION add_product(
+CREATE OR REPLACE FUNCTION add_or_delete_and_replace_product(
   given_id bigint,
   given_title text,
   given_vendor text,
@@ -8,7 +8,13 @@ CREATE OR REPLACE FUNCTION add_product(
   LANGUAGE plpgsql
   SECURITY DEFINER
 AS $$
+  DECLARE
+    found_product_id bigint;
 BEGIN
+  SELECT id INTO found_product_id FROM product where id = given_id;
+  IF found_product_id IS NOT NULL
+    THEN DELETE FROM product WHERE id = given_id;
+  END IF;
   INSERT INTO product
     (id, title, vendor, body_html)
   VALUES

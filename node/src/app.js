@@ -2,7 +2,8 @@ const express = require('express');
 const { store } = require('./routes/store');
 const { products } = require('./routes/products');
 const { migrate } = require('./db/migrate.js');
-const { SOURCE_CONFIGS, handleSeedProcess } = require('./seed/index.js');
+const { handleSeedProcess } = require('./seed/index.js');
+const { SOURCE_CONFIGS } = require('./seed/sources.js');
 
 const port = process.env.CONVICTIONAL_SERVER_PORT;
 

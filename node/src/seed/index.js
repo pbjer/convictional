@@ -47,7 +47,7 @@ async function seedDatabase({ product, variants, images }) {
 
 async function addProduct({ id, title, vendor, bodyHtml }) {
   try {
-    const queryString = 'select add_product($1, $2, $3, $4) as result';
+    const queryString = 'select add_or_delete_and_replace_product($1, $2, $3, $4) as result';
     const values = [id, title, vendor, bodyHtml];
     await query(queryString, values);
   } catch (e) {
@@ -75,4 +75,4 @@ async function addImage({ variantId, source }) {
   }
 }
 
-module.exports = { SOURCE_CONFIGS, handleSeedProcess };
+module.exports = { handleSeedProcess };

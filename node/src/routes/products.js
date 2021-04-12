@@ -58,4 +58,5 @@ async function validateProductId(req, res, next) {
 
 module.exports = {
   products,
+  validateProductId,
 };

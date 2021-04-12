@@ -8,6 +8,7 @@ USER node
 RUN npm ci
 COPY --chown=node:node . .
 RUN npx prettier --check ./src
+RUN npx jest
 
 # Install and build for production.
 FROM node:14.16.1-alpine3.12

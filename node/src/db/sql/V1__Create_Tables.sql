@@ -13,13 +13,13 @@ CREATE TABLE IF NOT EXISTS variant (
   inventory_quantity integer NOT NULL,
   weight_value bigint DEFAULT NULL,
   weight_unit text DEFAULT NULL,
-  CONSTRAINT variant_product_id_fkey FOREIGN KEY (product_id) REFERENCES product(id)
+  CONSTRAINT variant_product_id_fkey FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS image (
   id uuid primary key default uuid_generate_v4(),
   variant_id bigint NOT NULL,
   source text NOT NULL,
-  CONSTRAINT image_source_fkey FOREIGN KEY (variant_id) REFERENCES variant(id),
+  CONSTRAINT image_source_fkey FOREIGN KEY (variant_id) REFERENCES variant(id) ON DELETE CASCADE,
   UNIQUE (variant_id, source)
 );
