@@ -1,0 +1,21 @@
+{
+  "name": "convictional",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "seed": "node src/seed/index.js",
+    "start": "node src/app.js"
+  },
+  "author": "Prentice Bjerkeseth",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "prettier": "2.2.1"
+  }
+}
