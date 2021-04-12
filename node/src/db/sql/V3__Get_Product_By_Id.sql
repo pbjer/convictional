@@ -32,12 +32,12 @@ BEGIN
       ) FROM variant v WHERE v.product_id = p.id
     ),
     'images', (
-      SELECT array_agg(
-        json_build_object(
-          'source', i.source,
-          'variantId', cast(i.variant_id as text)
-        )
-      ) FROM image i
+      SELECT coalesce(json_agg(
+          json_build_object(
+            'source', i.source,
+            'variantId', cast(i.variant_id as text)
+          )
+        ), '[]'::json) FROM image i
         JOIN variant v ON v.product_id = p.id
         WHERE i.variant_id = v.id
     )
